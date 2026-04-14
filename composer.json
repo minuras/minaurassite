@@ -1,7 +1,0 @@
-{
-  "name": "minauras/website",
-  "description": "Minauras one-pager with Gmail SMTP contact form",
-  "require": {
-    "phpmailer/phpmailer": "^6.9"
-  }
-}

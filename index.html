@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Syne:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
@@ -614,7 +613,6 @@
     box-shadow: none;
   }
   .form-note { font-size: 12px; color: var(--muted); line-height: 1.6; }
-  .cf-turnstile { margin-top: 4px; }
   #formOk {
     display: none;
     color: var(--green);
@@ -1091,10 +1089,12 @@
           </select>
         </div>
         <div class="fg"><label for="message">Tell Us About Your Project</label><textarea id="message" name="message" placeholder="Describe your goals, challenges, or what you'd like to achieve..."></textarea></div>
-        <!-- Honeypot: hidden from users, bots will fill it -->
-        <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" aria-hidden="true">
-        <!-- Cloudflare Turnstile CAPTCHA -->
-        <div class="cf-turnstile" data-sitekey="0x4AAAAAAC9gjGo-OqTYv797" data-theme="light" data-size="flexible"></div>
+        <!-- Web3Forms hidden config -->
+        <input type="hidden" name="access_key" value="344e040a-f81b-4098-b2af-127f47c21e14">
+        <input type="hidden" name="subject" value="New Project Inquiry — minauras.com">
+        <input type="hidden" name="from_name" value="Minauras Contact Form">
+        <!-- Honeypot: bots fill this, Web3Forms drops the submission -->
+        <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
         <div class="form-bottom">
           <button type="submit" id="sb">Send Message</button>
           <p class="form-note">We respect your privacy.<br>No spam, ever.</p>
@@ -1183,7 +1183,7 @@
     });
   });
 
-  // Contact form — POST to send-mail.php (Gmail SMTP backend)
+  // Contact form — POST to Web3Forms (delivers to hello@minauras.com)
   document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -1195,40 +1195,28 @@
     // Reset UI
     formOk.style.display = 'none';
     formError.style.display = 'none';
-
-    // Verify Turnstile was completed
-    var tsToken = form.querySelector('[name="cf-turnstile-response"]');
-    if (!tsToken || !tsToken.value) {
-      formError.innerHTML = 'Please complete the verification challenge before sending.';
-      formError.style.display = 'block';
-      return;
-    }
-
     btn.textContent = 'Sending\u2026';
     btn.disabled = true;
 
-    fetch('send-mail.php', {
+    var data = new FormData(form);
+
+    fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      body: new FormData(form)
+      body: data
     })
-    .then(function(res) {
-      return res.json().then(function(data) { return { status: res.status, data: data }; });
-    })
-    .then(function(result) {
-      if (result.data && result.data.ok) {
+    .then(function(res) { return res.json(); })
+    .then(function(json) {
+      if (json && json.success) {
         formOk.style.display = 'block';
         form.reset();
-        if (window.turnstile) window.turnstile.reset();
       } else {
-        var msg = (result.data && result.data.error) ? result.data.error : 'Something went wrong.';
+        var msg = (json && json.message) ? json.message : 'Something went wrong.';
         formError.innerHTML = msg + ' Or email us at <a href="mailto:hello@minauras.com" style="color:var(--terra);text-decoration:underline;">hello@minauras.com</a>';
         formError.style.display = 'block';
-        if (window.turnstile) window.turnstile.reset();
       }
     })
     .catch(function() {
       formError.style.display = 'block';
-      if (window.turnstile) window.turnstile.reset();
     })
     .finally(function() {
       btn.textContent = 'Send Message';
