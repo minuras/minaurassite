@@ -1,0 +1,7 @@
+# Protect config files from direct web access
+<FilesMatch "^(config\.php|composer\.(json|lock))$">
+    Require all denied
+</FilesMatch>
+
+# Block access to vendor directory
+RedirectMatch 403 ^/vendor/.*$

@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minauras — Digital Intelligence. Global Reach.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Syne:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  :root {
+    --cream:   #F5F1E8;
+    --cream2:  #EDE8DC;
+    --cream3:  #E3DDD0;
+    --ink:     #1A1916;
+    --ink2:    #3D3A34;
+    --muted:   #8A8679;
+    --green:   #1D4D39;
+    --green2:  #2A6B50;
+    --terra:   #C8542A;
+    --terra2:  #E06A38;
+    --white:   #FDFCF9;
+    --border:  rgba(26,25,22,0.1);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Syne', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.5;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 200;
+    padding: 28px 64px;
+    display: flex; align-items: start; justify-content: space-between;
+    transition: all 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(245,241,232,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 64px;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 700;
+    color: var(--ink); text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--terra); }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--green); }
+  .nav-cta {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--white);
+    background: var(--green);
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 100px;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--green2); transform: translateY(-1px); }
+
+  /* HERO */
+  #hero {
+    padding: 90px 64px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hbc-1 {
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(29,77,57,0.07) 0%, transparent 70%);
+    top: -200px; right: -200px;
+  }
+  .hbc-2 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(200,84,42,0.06) 0%, transparent 70%);
+    bottom: -100px; left: -100px;
+  }
+
+  .hero-left { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--green);
+    background: rgba(29,77,57,0.08);
+    padding: 8px 16px;
+    border-radius: 100px;
+    margin-bottom: 36px;
+    opacity: 0; animation: fadeUp 0.7s 0.1s forwards;
+  }
+  .eyebrow-dot {
+    width: 5px; height: 5px;
+    background: var(--terra);
+    border-radius: 50%;
+    animation: blink 2s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 6.5vw, 96px);
+    font-weight: 400;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    opacity: 0; animation: fadeUp 0.8s 0.25s forwards;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--green);
+  }
+  h1 .terra { color: var(--terra); }
+  .hero-sub {
+    font-size: 17px; font-weight: 400;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 460px;
+    margin-top: 32px;
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-actions {
+    display: flex; align-items: center; gap: 20px;
+    margin-top: 48px;
+    opacity: 0; animation: fadeUp 0.8s 0.55s forwards;
+  }
+  .btn-fill {
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--white);
+    background: var(--green);
+    padding: 16px 36px;
+    text-decoration: none;
+    border-radius: 100px;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+  .btn-fill:hover {
+    background: var(--green2);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(29,77,57,0.22);
+  }
+  .btn-outline {
+    font-size: 13px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink);
+    border: 1.5px solid var(--border);
+    padding: 15px 32px;
+    text-decoration: none;
+    border-radius: 100px;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+  .btn-outline:hover {
+    border-color: var(--ink);
+    transform: translateY(-2px);
+  }
+
+  .hero-right {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+    gap: 20px; align-items: stretch;
+    padding-top: 67px;
+    opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+  }
+  .hero-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 32px;
+    width: 100%;
+    box-shadow: 0 4px 24px rgba(26,25,22,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .hero-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(26,25,22,0.1);
+  }
+
+  .hero-card .card-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px; font-weight: 700;
+    line-height: 1;
+    color: var(--green);
+  }
+  .hero-card .card-num span { color: var(--terra); font-size: 32px; }
+  .hero-card p {
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  .hero-card-wide {
+    width: 100%;
+    background: var(--green);
+    border-color: transparent;
+  }
+  .hero-card-wide .card-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(253,252,249,0.5);
+    margin-bottom: 12px;
+  }
+  .hero-card-wide .card-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-style: italic; font-weight: 400;
+    color: var(--white); line-height: 1.4;
+  }
+  .hero-card-wide .card-meta {
+    font-size: 11px; color: rgba(253,252,249,0.5);
+    margin-top: 16px; letter-spacing: 0.08em;
+  }
+  .hero-location-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 8px 16px; border-radius: 100px;
+    background: var(--white);
+    margin-top: 16px;
+    opacity: 0; animation: fadeUp 0.7s 0.7s forwards;
+  }
+  .loc-dot { width: 6px; height: 6px; background: var(--terra); border-radius: 50%; animation: blink 1.8s infinite; }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(28px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* MARQUEE */
+  #marquee-wrap {
+    background: var(--green);
+    padding: 18px 0; overflow: hidden;
+  }
+  .mq-track {
+    display: flex; gap: 0;
+    animation: mq 22s linear infinite;
+    white-space: nowrap;
+  }
+  .mq-item {
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(253,252,249,0.55);
+    white-space: nowrap; flex-shrink: 0;
+    padding: 0 36px;
+    transition: color 0.3s;
+  }
+  .mq-item:hover { color: var(--white); }
+  .mq-sep { color: var(--terra2); padding: 0 4px; }
+  @keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* SECTION SHARED */
+  section { padding: 120px 64px; position: relative; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 24px;
+  }
+  .section-tag::before {
+    content: '';
+    width: 28px; height: 2px;
+    background: var(--terra); border-radius: 2px;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 4vw, 64px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+  h2 em { font-style: italic; color: var(--green); }
+
+  /* SERVICES */
+  #services { background: var(--white); }
+  .services-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 72px; gap: 40px;
+  }
+  .services-header p {
+    max-width: 360px; font-size: 16px;
+    color: var(--muted); line-height: 1.8;
+  }
+  .services-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+  .svc-card {
+    border: 1.5px solid var(--border);
+    border-radius: 24px;
+    padding: 44px 40px;
+    background: var(--cream);
+    position: relative; overflow: hidden;
+    transition: border-color 0.35s, transform 0.35s, box-shadow 0.35s;
+  }
+  .svc-card:hover {
+    border-color: var(--green);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(29,77,57,0.1);
+  }
+  .svc-card.featured {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .svc-card.featured:hover {
+    border-color: var(--green2);
+    box-shadow: 0 20px 60px rgba(29,77,57,0.25);
+  }
+  .svc-num {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .featured .svc-num { color: rgba(253,252,249,0.45); }
+  .svc-icon {
+    width: 48px; height: 48px;
+    background: var(--white);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+    transition: background 0.3s;
+  }
+  .featured .svc-icon { background: rgba(253,252,249,0.1); }
+  .svc-icon svg { width: 22px; height: 22px; stroke: var(--green); fill: none; stroke-width: 1.8; }
+  .featured .svc-icon svg { stroke: var(--white); }
+  .svc-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 500;
+    margin-bottom: 16px; letter-spacing: -0.02em;
+  }
+  .featured h3 { color: var(--white); }
+  .svc-card > p {
+    font-size: 14px; color: var(--muted);
+    line-height: 1.8;
+  }
+  .featured > p { color: rgba(253,252,249,0.65); }
+  .svc-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .svc-tag {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--green);
+    background: rgba(29,77,57,0.08);
+    padding: 5px 14px; border-radius: 100px;
+  }
+  .featured .svc-tag {
+    color: var(--white);
+    background: rgba(253,252,249,0.12);
+  }
+  .svc-arrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--green); text-decoration: none;
+    margin-top: 36px;
+    transition: gap 0.3s;
+  }
+  .featured .svc-arrow { color: rgba(253,252,249,0.7); }
+  .svc-arrow:hover { gap: 16px; }
+  .svc-arrow svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* ABOUT */
+  #about {
+    background: var(--cream2);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 100px; align-items: center;
+    padding: 120px 64px;
+  }
+  .about-content {}
+  .about-content > p {
+    font-size: 16px; color: var(--muted);
+    line-height: 1.9; margin-top: 28px;
+  }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); margin-top: 48px; }
+  .about-stat { background: var(--cream2); padding: 28px 30px; }
+  .about-stat .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px; font-weight: 700;
+    color: var(--green); line-height: 1;
+  }
+  .about-stat .num sup { font-size: 28px; }
+  .about-stat p {
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); margin-top: 8px;
+  }
+  .about-visual-wrap { position: relative; }
+  .about-big-card {
+    background: var(--white);
+    border-radius: 28px;
+    padding: 52px 48px;
+    border: 1.5px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .about-big-card::after {
+    content: 'M';
+    font-family: 'Playfair Display', serif;
+    font-size: 240px; font-weight: 700;
+    color: rgba(29,77,57,0.05);
+    position: absolute; bottom: -60px; right: -20px;
+    line-height: 1; pointer-events: none;
+  }
+  .about-big-card .tag {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--terra); margin-bottom: 16px;
+  }
+  .about-big-card blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-style: italic; font-weight: 400;
+    line-height: 1.45; letter-spacing: -0.02em;
+    color: var(--ink);
+    border: none; padding: 0;
+    position: relative; z-index: 1;
+  }
+  .about-big-card .attr {
+    font-size: 13px; color: var(--muted);
+    margin-top: 28px; position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .about-big-card .attr::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--muted);
+  }
+  .pillars { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+  .pillar {
+    display: flex; align-items: flex-start; gap: 16px;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px 22px;
+    border: 1.5px solid var(--border);
+    transition: border-color 0.3s;
+  }
+  .pillar:hover { border-color: var(--green); }
+  .pillar-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: rgba(29,77,57,0.08);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pillar-icon svg { width: 16px; height: 16px; stroke: var(--green); fill: none; stroke-width: 1.8; }
+  .pillar-text h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .pillar-text p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* PROCESS */
+  #process { background: var(--cream); }
+  .process-header { max-width: 600px; margin-bottom: 80px; }
+  .process-header p { font-size: 16px; color: var(--muted); line-height: 1.8; margin-top: 20px; }
+  .process-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+  .process-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 36px 30px;
+    border: 1.5px solid var(--border);
+    position: relative; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .process-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(26,25,22,0.07); }
+  .process-card.active { background: var(--terra); border-color: var(--terra); }
+  .process-card .p-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px; font-weight: 700;
+    color: rgba(26,25,22,0.06);
+    line-height: 1; margin-bottom: 20px;
+    transition: color 0.3s;
+  }
+  .process-card.active .p-num { color: rgba(253,252,249,0.15); }
+  .process-card:hover .p-num { color: rgba(26,25,22,0.1); }
+  .process-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 500;
+    margin-bottom: 14px; letter-spacing: -0.01em;
+  }
+  .process-card.active h3 { color: var(--white); }
+  .process-card > p { font-size: 13px; color: var(--muted); line-height: 1.75; }
+  .process-card.active > p { color: rgba(253,252,249,0.7); }
+
+  /* CONTACT */
+  #contact { background: var(--cream2); }
+  .contact-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 72px; gap: 40px; }
+  .contact-top p { max-width: 340px; font-size: 16px; color: var(--muted); line-height: 1.8; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; }
+
+  .contact-sidebar { display: flex; flex-direction: column; gap: 20px; }
+  .c-info-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 28px;
+    display: flex; align-items: flex-start; gap: 16px;
+    transition: border-color 0.3s;
+  }
+  .c-info-card:hover { border-color: var(--green); }
+  .c-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: rgba(29,77,57,0.07);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .c-icon svg { width: 18px; height: 18px; stroke: var(--green); fill: none; stroke-width: 1.8; }
+  .c-info-text .label {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 4px;
+  }
+  .c-info-text .val { font-size: 14px; font-weight: 400; }
+  .c-info-text .val a { color: var(--ink); text-decoration: none; }
+  .c-info-text .val a:hover { color: var(--green); }
+
+  .c-big-card {
+    background: var(--green);
+    border-radius: 20px;
+    padding: 36px 32px;
+    margin-top: 4px;
+  }
+  .c-big-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-style: italic;
+    font-weight: 400; color: var(--white);
+    line-height: 1.4; margin-bottom: 16px;
+  }
+  .c-big-card p { font-size: 13px; color: rgba(253,252,249,0.6); line-height: 1.7; }
+
+  /* FORM */
+  .contact-form { display: flex; flex-direction: column; gap: 20px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .fg { display: flex; flex-direction: column; gap: 8px; }
+  .fg label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink2);
+  }
+  .fg input, .fg select, .fg textarea {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    color: var(--ink);
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 400;
+    padding: 14px 18px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    -webkit-appearance: none; appearance: none;
+  }
+  .fg select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231D4D39' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    cursor: pointer;
+  }
+  .fg select option { background: var(--white); }
+  .fg input:focus, .fg select:focus, .fg textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 4px rgba(29,77,57,0.08);
+  }
+  .fg input::placeholder, .fg textarea::placeholder { color: var(--muted); }
+  .fg textarea { resize: vertical; min-height: 120px; }
+  .form-bottom {
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    margin-top: 4px;
+  }
+  .form-bottom button {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--white);
+    background: var(--green);
+    border: none; border-radius: 100px;
+    padding: 16px 44px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .form-bottom button:hover {
+    background: var(--green2);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(29,77,57,0.2);
+  }
+  .form-bottom button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  .form-note { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .cf-turnstile { margin-top: 4px; }
+  #formOk {
+    display: none;
+    color: var(--green);
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 8px;
+    padding: 16px 20px;
+    background: rgba(29,77,57,0.08);
+    border-radius: 12px;
+  }
+  #formError {
+    display: none;
+    color: var(--terra);
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 8px;
+    padding: 16px 20px;
+    background: rgba(200,84,42,0.08);
+    border-radius: 12px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: var(--white);
+    padding: 72px 64px 36px;
+  }
+  .footer-top {
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 60px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid rgba(245,241,232,0.1);
+    margin-bottom: 36px;
+  }
+  .footer-brand .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px; font-weight: 700;
+    color: var(--white); margin-bottom: 14px;
+  }
+  .footer-brand .logo span { color: var(--terra2); }
+  .footer-brand p {
+    font-size: 13px; color: rgba(245,241,232,0.45);
+    max-width: 260px; line-height: 1.7;
+  }
+  .footer-cols { display: flex; gap: 64px; }
+  .footer-col h4 {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--terra2); margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-col ul a {
+    font-size: 14px; color: rgba(245,241,232,0.45);
+    text-decoration: none; transition: color 0.25s;
+  }
+  .footer-col ul a:hover { color: var(--white); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center; gap: 20px;
+  }
+  .footer-bottom p { font-size: 12px; color: rgba(245,241,232,0.25); }
+  .f-socials { display: flex; gap: 12px; }
+  .f-social {
+    width: 38px; height: 38px;
+    border: 1px solid rgba(245,241,232,0.12);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .f-social:hover { border-color: var(--terra2); background: rgba(200,84,42,0.08); }
+  .f-social svg { width: 14px; height: 14px; stroke: rgba(245,241,232,0.4); fill:none; stroke-width:1.5; }
+  .f-social:hover svg { stroke: var(--terra2); }
+
+  /* REVEAL */
+  .reveal { opacity:1; transform:translateY(0); transition: opacity 0.75s, transform 0.75s; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 4px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    nav, section, footer, #hero, #about { padding-left: 40px; padding-right: 40px; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    #about { grid-template-columns: 1fr; gap: 60px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    .process-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 18px 24px; }
+    nav.scrolled { padding: 14px 24px; }
+    .nav-links { display: none; }
+    #hero { padding: 140px 24px 60px; grid-template-columns: 1fr; }
+    .hero-right { align-items: flex-start; }
+    .hero-card:nth-child(2) { margin-right: 0; }
+    section, #about, footer { padding-left: 24px; padding-right: 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .services-header { flex-direction: column; }
+    .process-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-top { flex-direction: column; }
+    .footer-cols { flex-wrap: wrap; gap: 36px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .contact-top { flex-direction: column; }
+  }
+
+  /* HAMBURGER */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px; height: 40px;
+    background: none; border: none;
+    cursor: pointer; padding: 6px;
+    z-index: 300;
+  }
+  .hamburger span {
+    display: block;
+    height: 2px; width: 100%;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: transform 0.35s, opacity 0.35s, width 0.35s;
+    transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* MOBILE DRAWER */
+  .mobile-menu {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--cream);
+    z-index: 250;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    opacity: 0;
+    transform: translateY(-16px);
+    transition: opacity 0.35s, transform 0.35s;
+    pointer-events: none;
+  }
+  .mobile-menu.open {
+    display: flex;
+    opacity: 1; transform: translateY(0);
+    pointer-events: all;
+  }
+  .mobile-menu a {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--ink); text-decoration: none;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    width: 80%; text-align: center;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--green); }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu-cta {
+    margin-top: 40px;
+    font-family: 'Syne', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: var(--white) !important;
+    background: var(--green);
+    padding: 16px 48px !important;
+    border-radius: 100px;
+    border-bottom: none !important;
+    width: auto !important;
+  }
+  .mobile-menu-cta:hover { background: var(--green2); color: var(--white) !important; }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .nav-cta { display: none; }
+  }
+</style>
+</head>
+<body>
+
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Minau<span>ras</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#process">Approach</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get Started</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" class="mobile-link">Services</a>
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#process" class="mobile-link">Approach</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+  <a href="#contact" class="mobile-menu-cta">Get Started</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hbc-1 hero-bg-circle"></div>
+  <div class="hbc-2 hero-bg-circle"></div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow"><div class="eyebrow-dot"></div>Singapore · Global Reach</div>
+    <h1>We grow<br><em>brands</em> with<br><span class="terra">digital</span><br>intelligence</h1>
+    <p class="hero-sub">Marketing strategy, software engineering, and AI expertise — unified under one roof for ambitious businesses worldwide.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-fill">Start a Project</a>
+      <a href="#services" class="btn-outline">Our Services</a>
+    </div>
+    <div class="hero-location-pill">
+      <div class="loc-dot"></div>
+      Headquartered in Singapore
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div style="display:flex;gap:16px;">
+      <div class="hero-card" style="flex:1;">
+        <div class="card-num">150<span>+</span></div>
+        <p>Clients Worldwide</p>
+      </div>
+      <div class="hero-card" style="flex:1;">
+        <div class="card-num">30<span>+</span></div>
+        <p>Countries Served</p>
+      </div>
+    </div>
+    <div class="hero-card hero-card-wide">
+      <div class="card-label">Our Promise</div>
+      <div class="card-text">"Outcomes over deliverables, always."</div>
+      <div class="card-meta">— The Minauras Way</div>
+    </div>
+    <div class="hero-card" style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--green);line-height:1;">8<span style="color:var(--terra);font-size:20px;">+</span></div>
+        <p style="margin-top:6px;">Years of Craft</p>
+      </div>
+      <div style="width:1px;height:48px;background:var(--border);"></div>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--green);line-height:1;">98<span style="color:var(--terra);font-size:20px;">%</span></div>
+        <p style="margin-top:6px;">Client Retention</p>
+      </div>
+      <div style="width:1px;height:48px;background:var(--border);"></div>
+      <div style="text-align:right;">
+        <div style="display:flex;gap:-6px;margin-bottom:8px;justify-content:flex-end;">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--green);border:2px solid var(--white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--white);margin-left:-8px;">A</div>
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--terra);border:2px solid var(--white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--white);margin-left:-8px;">B</div>
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--ink2);border:2px solid var(--white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--white);margin-left:-8px;">C</div>
+        </div>
+        <p style="font-size:11px;">Happy clients</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div id="marquee-wrap">
+  <div class="mq-track">
+    <span class="mq-item">Digital Marketing</span><span class="mq-sep">◆</span>
+    <span class="mq-item">AI Development</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Brand Strategy</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Software Engineering</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Performance Marketing</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Machine Learning</span><span class="mq-sep">◆</span>
+    <span class="mq-item">SEO &amp; Content</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Recruitment Consulting</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Product Design</span><span class="mq-sep">◆</span>
+    <!-- dupe for seamless loop -->
+    <span class="mq-item">Digital Marketing</span><span class="mq-sep">◆</span>
+    <span class="mq-item">AI Development</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Brand Strategy</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Software Engineering</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Performance Marketing</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Machine Learning</span><span class="mq-sep">◆</span>
+    <span class="mq-item">SEO &amp; Content</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Recruitment Consulting</span><span class="mq-sep">◆</span>
+    <span class="mq-item">Product Design</span><span class="mq-sep">◆</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header reveal">
+    <div>
+      <div class="section-tag">What We Do</div>
+      <h2>Built for the<br><em>digital age</em></h2>
+    </div>
+    <p>From brand storytelling to intelligent software, we are your full-spectrum digital growth partner.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="svc-card">
+      <div class="svc-num">01</div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <h3>Digital Marketing</h3>
+      <p>Data-driven campaigns that capture audiences and convert them into loyal customers, across every channel that matters.</p>
+      <div class="svc-tags">
+        <span class="svc-tag">SEO</span>
+        <span class="svc-tag">Paid Media</span>
+        <span class="svc-tag">Social</span>
+        <span class="svc-tag">Content</span>
+      </div>
+      <a href="#contact" class="svc-arrow">Learn More <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="svc-card featured">
+      <div class="svc-num">02</div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+      <h3>Software Development</h3>
+      <p>Bespoke web and mobile applications engineered for performance, scale, and longevity — from MVP to enterprise platforms.</p>
+      <div class="svc-tags">
+        <span class="svc-tag">Web Apps</span>
+        <span class="svc-tag">Mobile</span>
+        <span class="svc-tag">APIs</span>
+        <span class="svc-tag">Cloud</span>
+      </div>
+      <a href="#contact" class="svc-arrow">Learn More <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="svc-card">
+      <div class="svc-num">03</div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M8.46 8.46a5 5 0 0 0 0 7.07"/></svg></div>
+      <h3>AI &amp; Automation</h3>
+      <p>Harness artificial intelligence to automate workflows, surface insights, and build intelligent products your users love.</p>
+      <div class="svc-tags">
+        <span class="svc-tag">LLMs</span>
+        <span class="svc-tag">ML Models</span>
+        <span class="svc-tag">Chatbots</span>
+        <span class="svc-tag">Analytics</span>
+      </div>
+      <a href="#contact" class="svc-arrow">Learn More <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="svc-card">
+      <div class="svc-num">04</div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <h3>Recruitment Consulting</h3>
+      <p>Connecting world-class talent with ambitious companies. We source, screen, and place the right people across tech, marketing, and executive roles globally.</p>
+      <div class="svc-tags">
+        <span class="svc-tag">Tech Talent</span>
+        <span class="svc-tag">Executive Search</span>
+        <span class="svc-tag">Headhunting</span>
+        <span class="svc-tag">Screening</span>
+      </div>
+      <a href="#contact" class="svc-arrow">Learn More <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-content reveal">
+    <div class="section-tag">Who We Are</div>
+    <h2>Where strategy<br>meets <em>technology</em></h2>
+    <p>Minauras is a Singapore-headquartered digital intelligence company. We blend the art of marketing with the science of software to deliver outcomes that matter — growth, efficiency, and lasting competitive advantage.</p>
+    <p>Our global team of strategists, engineers, and AI specialists work as a seamless extension of your business, wherever you are in the world.</p>
+    <div class="about-stats">
+      <div class="about-stat"><div class="num">150<sup>+</sup></div><p>Global Clients</p></div>
+      <div class="about-stat"><div class="num">30<sup>+</sup></div><p>Countries</p></div>
+      <div class="about-stat"><div class="num">8<sup>+</sup></div><p>Years of Craft</p></div>
+      <div class="about-stat"><div class="num">98<sup>%</sup></div><p>Client Retention</p></div>
+    </div>
+  </div>
+  <div class="about-visual-wrap reveal">
+    <div class="about-big-card">
+      <div class="tag">Client Feedback</div>
+      <blockquote>"Minauras transformed our digital presence and delivered measurable results within three months."</blockquote>
+      <div class="attr">Head of Growth, Series B Tech Startup — London</div>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div class="pillar-text"><h4>Global Mindset</h4><p>Serving clients across Asia, Europe, the Middle East, and the Americas.</p></div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <div class="pillar-text"><h4>AI-First Approach</h4><p>Every solution is powered by the latest in machine intelligence.</p></div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="pillar-text"><h4>Outcome-Driven</h4><p>We measure success by your growth, not by deliverables shipped.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="process-header reveal">
+    <div class="section-tag">Our Approach</div>
+    <h2>How we deliver<br><em>exceptional results</em></h2>
+    <p>A proven four-step methodology that blends creative thinking with technical execution.</p>
+  </div>
+  <div class="process-grid reveal">
+    <div class="process-card">
+      <div class="p-num">01</div>
+      <h3>Discover</h3>
+      <p>We begin by understanding your business deeply — your goals, market, audience, and the competitive edges worth pursuing.</p>
+    </div>
+    <div class="process-card active">
+      <div class="p-num">02</div>
+      <h3>Strategise</h3>
+      <p>A tailored roadmap is crafted, blending marketing, technology, and AI touchpoints aligned to measurable outcomes.</p>
+    </div>
+    <div class="process-card">
+      <div class="p-num">03</div>
+      <h3>Execute</h3>
+      <p>Our teams move fast and with precision — deploying campaigns and engineering solutions simultaneously, without silos.</p>
+    </div>
+    <div class="process-card">
+      <div class="p-num">04</div>
+      <h3>Optimise</h3>
+      <p>Using real-time data and AI insights, we continuously refine and scale what works — compounding your advantage.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-top reveal">
+    <div>
+      <div class="section-tag">Let's Talk</div>
+      <h2>Start your next<br><em>breakthrough project</em></h2>
+    </div>
+    <p>Whether you're a startup looking to scale or an established enterprise seeking digital transformation, we'd love to hear from you.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-sidebar reveal">
+      <div class="c-info-card">
+        <div class="c-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="c-info-text"><div class="label">Headquarters</div><div class="val">Singapore</div></div>
+      </div>
+      <div class="c-info-card">
+        <div class="c-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div class="c-info-text"><div class="label">Email</div><div class="val"><a href="mailto:hello@minauras.com">hello@minauras.com</a></div></div>
+      </div>
+      <div class="c-info-card">
+        <div class="c-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="c-info-text"><div class="label">Response Time</div><div class="val">Within 24 hours</div></div>
+      </div>
+      <div class="c-big-card">
+        <h4>"Every great project starts with a single conversation."</h4>
+        <p>We're a friendly, collaborative team. No sales pressure — just an honest conversation about how we can help.</p>
+      </div>
+    </div>
+    <div class="reveal">
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="fg"><label for="firstName">First Name</label><input type="text" id="firstName" name="firstName" placeholder="James" required></div>
+          <div class="fg"><label for="lastName">Last Name</label><input type="text" id="lastName" name="lastName" placeholder="Chen" required></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label for="email">Email</label><input type="email" id="email" name="email" placeholder="james@company.com" required></div>
+          <div class="fg"><label for="company">Company</label><input type="text" id="company" name="company" placeholder="Your Company"></div>
+        </div>
+        <div class="fg">
+          <label for="service">Service Interest</label>
+          <select id="service" name="service">
+            <option value="" disabled selected>Select a service</option>
+            <option>Digital Marketing</option>
+            <option>Software Development</option>
+            <option>AI &amp; Automation</option>
+            <option>Recruitment Consulting</option>
+            <option>Full-Stack Partnership</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fg"><label for="message">Tell Us About Your Project</label><textarea id="message" name="message" placeholder="Describe your goals, challenges, or what you'd like to achieve..."></textarea></div>
+        <!-- Honeypot: hidden from users, bots will fill it -->
+        <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" aria-hidden="true">
+        <!-- Cloudflare Turnstile CAPTCHA -->
+        <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY" data-theme="light" data-size="flexible"></div>
+        <div class="form-bottom">
+          <button type="submit" id="sb">Send Message</button>
+          <p class="form-note">We respect your privacy.<br>No spam, ever.</p>
+        </div>
+        <div id="formOk">&#10003; &nbsp;Thank you! Your message has been sent to hello@minauras.com. We'll be in touch within 24 hours.</div>
+        <div id="formError">Something went wrong. Please email us directly at <a href="mailto:hello@minauras.com" style="color:var(--terra);text-decoration:underline;">hello@minauras.com</a></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">Minau<span>ras</span></div>
+      <p>Digital intelligence for ambitious brands. Headquartered in Singapore, working worldwide.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Digital Marketing</a></li>
+          <li><a href="#services">Software Development</a></li>
+          <li><a href="#services">AI &amp; Automation</a></li>
+          <li><a href="#services">Recruitment Consulting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#process">Our Approach</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:hello@minauras.com">hello@minauras.com</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Twitter</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Minauras Pte. Ltd. All rights reserved. Incorporated in Singapore.</p>
+    <div class="f-socials">
+      <a href="#" class="f-social" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+      <a href="#" class="f-social" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+      <a href="#" class="f-social" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  window.addEventListener('scroll', function() {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Intersection Observer for reveal animations
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
+
+  // Hamburger menu
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', function() {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+
+  document.querySelectorAll('.mobile-menu a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Contact form — POST to send-mail.php (Gmail SMTP backend)
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var form = e.target;
+    var btn = document.getElementById('sb');
+    var formOk = document.getElementById('formOk');
+    var formError = document.getElementById('formError');
+
+    // Reset UI
+    formOk.style.display = 'none';
+    formError.style.display = 'none';
+
+    // Verify Turnstile was completed
+    var tsToken = form.querySelector('[name="cf-turnstile-response"]');
+    if (!tsToken || !tsToken.value) {
+      formError.innerHTML = 'Please complete the verification challenge before sending.';
+      formError.style.display = 'block';
+      return;
+    }
+
+    btn.textContent = 'Sending\u2026';
+    btn.disabled = true;
+
+    fetch('send-mail.php', {
+      method: 'POST',
+      body: new FormData(form)
+    })
+    .then(function(res) {
+      return res.json().then(function(data) { return { status: res.status, data: data }; });
+    })
+    .then(function(result) {
+      if (result.data && result.data.ok) {
+        formOk.style.display = 'block';
+        form.reset();
+        if (window.turnstile) window.turnstile.reset();
+      } else {
+        var msg = (result.data && result.data.error) ? result.data.error : 'Something went wrong.';
+        formError.innerHTML = msg + ' Or email us at <a href="mailto:hello@minauras.com" style="color:var(--terra);text-decoration:underline;">hello@minauras.com</a>';
+        formError.style.display = 'block';
+        if (window.turnstile) window.turnstile.reset();
+      }
+    })
+    .catch(function() {
+      formError.style.display = 'block';
+      if (window.turnstile) window.turnstile.reset();
+    })
+    .finally(function() {
+      btn.textContent = 'Send Message';
+      btn.disabled = false;
+    });
+  });
+</script>
+</body>
+</html>

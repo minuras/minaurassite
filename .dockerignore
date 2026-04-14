@@ -1,0 +1,12 @@
+vendor/
+node_modules/
+.git/
+.gitignore
+.DS_Store
+config.php
+config.example.php
+DEPLOY.md
+minauras-light*.html
+*.md
+.env
+.env.*
